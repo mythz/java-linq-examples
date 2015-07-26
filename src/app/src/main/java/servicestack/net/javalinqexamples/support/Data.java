@@ -1,6 +1,25 @@
 package servicestack.net.javalinqexamples.support;
 
+import android.content.res.Resources;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import servicestack.net.javalinqexamples.R;
 
 import static servicestack.net.javalinqexamples.support.Func.toList;
 
@@ -8,7 +27,7 @@ import static servicestack.net.javalinqexamples.support.Func.toList;
  * Created by mythz on 7/26/2015.
  */
 public class Data {
-    public static ArrayList<Product> getProductsList() {
+    public static List<Product> getProductsList() {
         Product[] products = new Product[]{
             new Product(1, "Chai", "Beverages", 18.000, 39),
             new Product(2, "Chang", "Beverages", 19.000, 17),
@@ -90,4 +109,55 @@ public class Data {
         };
         return toList(products);
     }
+
+    public static JsonDeserializer<Date> getDateDeserializer(){
+        final SimpleDateFormat iso8601Formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+        return new JsonDeserializer<Date>() {
+            @Override
+            public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                try {
+                    return json == null ? null : iso8601Formatter.parse(json.getAsString());
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+    }
+
+    static ArrayList<Customer> customers;
+    public static void init(Resources res)
+    {
+        try {
+            InputStream is = res.openRawResource(R.raw.customers);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
+            Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Date.class, getDateDeserializer()).create();
+
+            Customer[] c = gson.fromJson(reader, Customer[].class);
+            customers = toList(c);
+
+            reader.close();
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static List<Customer> getCustomerList()
+    {
+        return customers;
+    }
+
+    static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
+    public static String dateFmt(Date date)
+    {
+        if (date == null)
+            return "";
+
+        return dateFormat.format(date);
+    }
+
 }
