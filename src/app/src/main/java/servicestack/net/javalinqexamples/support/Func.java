@@ -21,6 +21,11 @@ public class Func {
         public E reduce(E prev, T item);
     }
 
+    public static interface PredicateIndex<T> {
+
+        boolean apply(T t, int index);
+    }
+
     public static <T,R> ArrayList<R> map(T[] xs, Function<T,R> f) { return map(toList(xs), f); }
 
     public static <T,R> ArrayList<R> map(Iterable<T> xs, Function<T,R> f) {
@@ -77,6 +82,21 @@ public class Func {
 
         for (T x : xs) {
             if (predicate.apply(x)){
+                to.add(x);
+            }
+        }
+        return to;
+    }
+
+    public static <T> ArrayList<T> filteri(T[] xs, PredicateIndex<T> predicate){ return filteri(toList(xs), predicate); }
+
+    public static <T> ArrayList<T> filteri(Iterable<T> xs, PredicateIndex<T> predicate){
+        ArrayList<T> to = new ArrayList<>();
+        if (xs == null) return to;
+
+        int i = 0;
+        for (T x : xs) {
+            if (predicate.apply(x, i++)){
                 to.add(x);
             }
         }

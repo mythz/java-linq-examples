@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import servicestack.net.javalinqexamples.support.Customer;
+import servicestack.net.javalinqexamples.support.Func;
 import servicestack.net.javalinqexamples.support.Log;
 import servicestack.net.javalinqexamples.support.Order;
 import servicestack.net.javalinqexamples.support.Product;
@@ -14,7 +15,9 @@ import static servicestack.net.javalinqexamples.support.Data.dateFmt;
 import static servicestack.net.javalinqexamples.support.Data.getCustomerList;
 import static servicestack.net.javalinqexamples.support.Data.getProductsList;
 import static servicestack.net.javalinqexamples.support.Func.filter;
+import static servicestack.net.javalinqexamples.support.Func.filteri;
 import static servicestack.net.javalinqexamples.support.Func.toList;
+import static servicestack.net.javalinqexamples.support.Func.PredicateIndex;
 
 /**
  * Created by mythz on 7/26/2015.
@@ -91,12 +94,16 @@ public class Restrictions {
     public void linq5(){
         String[] digits = new String[]{ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
-        final int[] i = {0};
-        List<String> shortDigits = filter(digits, new Predicate<String>() {
+        List<String> shortDigits = filteri(digits, new PredicateIndex<String>() {
             @Override
-            public boolean apply(String s) {
-                return s.length() < ++i[0];
+            public boolean apply(String s, int i) {
+                return s.length() < i;
             }
         });
+
+        Log.d("Short digits:");
+        for (String d : shortDigits){
+            Log.d("The word " + d + " is shorter than its value.");
+        }
     }
 }
