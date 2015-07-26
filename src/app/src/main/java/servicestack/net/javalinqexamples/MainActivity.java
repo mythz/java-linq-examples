@@ -9,6 +9,7 @@ import android.widget.TextView;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import servicestack.net.javalinqexamples.support.Data;
 import servicestack.net.javalinqexamples.support.Log;
 import servicestack.net.javalinqexamples.support.LogProvider;
 import servicestack.net.javalinqexamples.support.LogType;
@@ -16,27 +17,29 @@ import servicestack.net.javalinqexamples.support.LogType;
 
 public class MainActivity extends Activity {
 
-    public class TextViewLogProvider extends LogProvider {
-        TextView textView;
+    public class StringBuilderLogProvider extends LogProvider {
+        StringBuilder sb;
 
-        public TextViewLogProvider(TextView textView){
+        public StringBuilderLogProvider(StringBuilder sb){
             super(null, true);
-            this.textView = textView;
+            this.sb = sb;
         }
 
         @Override
         public void println(LogType type, Object message) {
-            textView.setText(textView.getText() + "\n" + message.toString());
+            sb.append("\n" + message.toString());
         }
     }
 
+    StringBuilder sb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView txtMain = (TextView)findViewById(R.id.txtMain);
-        Log.Instance = new TextViewLogProvider(txtMain);
+        sb = new StringBuilder();
+        Log.Instance = new StringBuilderLogProvider(sb);
+        Data.init(getResources());
 
         Log.i("101 Java LINQ Examples:");
         Run(new Restrictions());
@@ -58,6 +61,9 @@ public class MainActivity extends Activity {
                 e.printStackTrace();
             }
         }
+
+        TextView txtMain = (TextView)findViewById(R.id.txtMain);
+        txtMain.setText(sb.toString());
     }
 
     @Override
