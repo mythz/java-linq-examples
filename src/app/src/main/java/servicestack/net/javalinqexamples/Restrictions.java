@@ -3,10 +3,15 @@ package servicestack.net.javalinqexamples;
 import com.android.internal.util.Predicate;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import servicestack.net.javalinqexamples.support.Customer;
 import servicestack.net.javalinqexamples.support.Log;
+import servicestack.net.javalinqexamples.support.Order;
 import servicestack.net.javalinqexamples.support.Product;
 
+import static servicestack.net.javalinqexamples.support.Data.dateFmt;
+import static servicestack.net.javalinqexamples.support.Data.getCustomerList;
 import static servicestack.net.javalinqexamples.support.Data.getProductsList;
 import static servicestack.net.javalinqexamples.support.Func.filter;
 import static servicestack.net.javalinqexamples.support.Func.toList;
@@ -19,7 +24,7 @@ public class Restrictions {
     public void linq1(){
         int[] numbers = new int[]{ 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-        ArrayList<Integer> lowNums = filter(toList(numbers), new Predicate<Integer>() {
+        List<Integer> lowNums = filter(toList(numbers), new Predicate<Integer>() {
             @Override
             public boolean apply(Integer n) {
                 return n < 5;
@@ -33,9 +38,9 @@ public class Restrictions {
     }
 
     public void linq2(){
-        ArrayList<Product> products = getProductsList();
+        List<Product> products = getProductsList();
 
-        ArrayList<Product> soldOutProducts = filter(products, new Predicate<Product>() {
+        List<Product> soldOutProducts = filter(products, new Predicate<Product>() {
             @Override
             public boolean apply(Product p) {
                 return p.unitsInStock == 0;
@@ -49,7 +54,7 @@ public class Restrictions {
     }
 
     public void linq3(){
-        ArrayList<Product> products = getProductsList();
+        List<Product> products = getProductsList();
 
         ArrayList<Product> expensiveInStockProducts = filter(products, new Predicate<Product>() {
             @Override
@@ -65,6 +70,33 @@ public class Restrictions {
     }
 
     public void linq4(){
+        List<Customer> customers = getCustomerList();
 
+        List<Customer> waCustomers = filter(customers, new Predicate<Customer>() {
+            @Override
+            public boolean apply(Customer c) {
+                return "WA".equals(c.region);
+            }
+        });
+
+        Log.d("Customers from Washington and their orders:");
+        for (Customer c : waCustomers){
+            Log.d("Customer " + c.customerId + " " + c.companyName);
+            for (Order o : c.orders){
+                Log.d("  Order " + o.orderId + ": " + dateFmt(o.orderDate));
+            }
+        }
+    }
+
+    public void linq5(){
+        String[] digits = new String[]{ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+
+        final int[] i = {0};
+        List<String> shortDigits = filter(digits, new Predicate<String>() {
+            @Override
+            public boolean apply(String s) {
+                return s.length() < ++i[0];
+            }
+        });
     }
 }
