@@ -27,7 +27,7 @@ import static servicestack.net.javalinqexamples.support.Func.toList;
  * Created by mythz on 7/26/2015.
  */
 public class Data {
-    public static List<Product> getProductsList() {
+    public static List<Product> getProductList() {
         Product[] products = new Product[]{
             new Product(1, "Chai", "Beverages", 18.000, 39),
             new Product(2, "Chang", "Beverages", 19.000, 17),

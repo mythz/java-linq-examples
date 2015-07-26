@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.lang.reflect.InvocationTargetException;
@@ -42,7 +44,8 @@ public class MainActivity extends Activity {
         Data.init(getResources());
 
         Log.i("101 Java LINQ Examples:");
-        Run(new Restrictions());
+//        Run(new Restrictions());
+        Run(new Projections());
     }
 
     void Run(Object linqExamples){
@@ -64,6 +67,14 @@ public class MainActivity extends Activity {
 
         TextView txtMain = (TextView)findViewById(R.id.txtMain);
         txtMain.setText(sb.toString());
+
+        final ScrollView scrollView = (ScrollView)findViewById(R.id.scrollView);
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(View.FOCUS_DOWN);
+            }
+        });
     }
 
     @Override

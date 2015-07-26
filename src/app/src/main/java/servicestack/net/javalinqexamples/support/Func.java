@@ -4,6 +4,8 @@ import com.android.internal.util.Predicate;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by mythz on 7/26/2015.
@@ -17,34 +19,81 @@ public class Func {
         public R apply(T t);
     }
 
+    public static interface FunctionIndex<T,R> {
+        public R apply(T t, int i);
+    }
+
     public static interface Reducer<T,E> {
         public E reduce(E prev, T item);
     }
 
     public static interface PredicateIndex<T> {
 
-        boolean apply(T t, int index);
+        boolean apply(T t, int i);
     }
 
-    public static <T,R> ArrayList<R> map(T[] xs, Function<T,R> f) { return map(toList(xs), f); }
-
-    public static <T,R> ArrayList<R> map(Iterable<T> xs, Function<T,R> f) {
-        ArrayList<R> to = new ArrayList<>();
-        if (xs == null) return to;
-
-        for (T x : xs) {
-            R ret = f.apply(x);
-            to.add(ret);
+    public static class Tuple<A,B> {
+        public A A;
+        public B B;
+        public Tuple(A a, B b) {
+            A = a;
+            B = b;
         }
-        return to;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Tuple)) return false;
+            Tuple<?, ?> tuple = (Tuple<?, ?>) o;
+            if (A != null ? !A.equals(tuple.A) : tuple.A != null) return false;
+            return !(B != null ? !B.equals(tuple.B) : tuple.B != null);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = A != null ? A.hashCode() : 0;
+            result = 31 * result + (B != null ? B.hashCode() : 0);
+            return result;
+        }
+
+        @Override
+        public String toString() {
+            return "(" + A + ", " + B + ")";
+        }
     }
 
-    public static <T> void each(T[] xs, Each<T> f) { each(toList(xs), f); }
+    public static class Tuple3<A,B,C> {
+        public A A;
+        public B B;
+        public C C;
 
-    public static <T> void each(Iterable<T> xs, Each<T> f) {
-        if (xs == null) return;
-        for (T x : xs) {
-            f.apply(x);
+        public Tuple3(A a, B b, C c) {
+            A = a;
+            B = b;
+            C = c;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Tuple3)) return false;
+            Tuple3<?, ?, ?> tuple3 = (Tuple3<?, ?, ?>) o;
+            if (A != null ? !A.equals(tuple3.A) : tuple3.A != null) return false;
+            if (B != null ? !B.equals(tuple3.B) : tuple3.B != null) return false;
+            return !(C != null ? !C.equals(tuple3.C) : tuple3.C != null);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = A != null ? A.hashCode() : 0;
+            result = 31 * result + (B != null ? B.hashCode() : 0);
+            result = 31 * result + (C != null ? C.hashCode() : 0);
+            return result;
+        }
+
+        @Override
+        public String toString() {
+            return "(" + A + ", " + B + ", " + C + ")";
         }
     }
 
@@ -72,6 +121,42 @@ public class Func {
             to.add(x);
         }
         return to;
+    }
+
+    public static <T,R> ArrayList<R> map(T[] xs, Function<T,R> f) { return map(toList(xs), f); }
+
+    public static <T,R> ArrayList<R> map(Iterable<T> xs, Function<T,R> f) {
+        ArrayList<R> to = new ArrayList<>();
+        if (xs == null) return to;
+
+        for (T x : xs) {
+            R ret = f.apply(x);
+            to.add(ret);
+        }
+        return to;
+    }
+
+    public static <T,R> ArrayList<R> mapi(T[] xs, FunctionIndex<T,R> f) { return mapi(toList(xs), f); }
+
+    public static <T,R> ArrayList<R> mapi(Iterable<T> xs, FunctionIndex<T,R> f) {
+        ArrayList<R> to = new ArrayList<>();
+        if (xs == null) return to;
+
+        int i = 0;
+        for (T x : xs) {
+            R ret = f.apply(x, i++);
+            to.add(ret);
+        }
+        return to;
+    }
+
+    public static <T> void each(T[] xs, Each<T> f) { each(toList(xs), f); }
+
+    public static <T> void each(Iterable<T> xs, Each<T> f) {
+        if (xs == null) return;
+        for (T x : xs) {
+            f.apply(x);
+        }
     }
 
     public static <T> ArrayList<T> filter(T[] xs, Predicate<T> predicate){ return filter(toList(xs), predicate); }
@@ -261,6 +346,18 @@ public class Func {
     }
 
     public static <T> ArrayList<T> expand(Iterable<T>... xss){
+        ArrayList<T> to = new ArrayList<>();
+        if (xss == null) return to;
+
+        for (Iterable<T> xs : xss) {
+            for (T x : xs){
+                to.add(x);
+            }
+        }
+        return to;
+    }
+
+    public static <T> ArrayList<T> expand(Iterable<List<T>> xss){
         ArrayList<T> to = new ArrayList<>();
         if (xss == null) return to;
 

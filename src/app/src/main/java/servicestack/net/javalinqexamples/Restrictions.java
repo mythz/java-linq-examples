@@ -6,14 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import servicestack.net.javalinqexamples.support.Customer;
-import servicestack.net.javalinqexamples.support.Func;
 import servicestack.net.javalinqexamples.support.Log;
 import servicestack.net.javalinqexamples.support.Order;
 import servicestack.net.javalinqexamples.support.Product;
 
 import static servicestack.net.javalinqexamples.support.Data.dateFmt;
 import static servicestack.net.javalinqexamples.support.Data.getCustomerList;
-import static servicestack.net.javalinqexamples.support.Data.getProductsList;
+import static servicestack.net.javalinqexamples.support.Data.getProductList;
 import static servicestack.net.javalinqexamples.support.Func.filter;
 import static servicestack.net.javalinqexamples.support.Func.filteri;
 import static servicestack.net.javalinqexamples.support.Func.toList;
@@ -41,7 +40,7 @@ public class Restrictions {
     }
 
     public void linq2(){
-        List<Product> products = getProductsList();
+        List<Product> products = getProductList();
 
         List<Product> soldOutProducts = filter(products, new Predicate<Product>() {
             @Override
@@ -57,7 +56,7 @@ public class Restrictions {
     }
 
     public void linq3(){
-        List<Product> products = getProductsList();
+        List<Product> products = getProductList();
 
         ArrayList<Product> expensiveInStockProducts = filter(products, new Predicate<Product>() {
             @Override
