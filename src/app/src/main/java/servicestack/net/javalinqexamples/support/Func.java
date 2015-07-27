@@ -756,4 +756,28 @@ public class Func {
         }
         return to;
     }
+
+    public static int[] range(int begin, int end){
+        if (end >= begin) {
+            int[] to = new int[++end - begin];
+            for (int i=0; begin < end; ){
+                to[i++] = begin++;
+            }
+            return to;
+        } else {
+            int[] to = new int[++begin - end];
+            for (int i=0; end < begin; ){
+                to[i++] = end++;
+            }
+            return to;
+        }
+    }
+
+    public static int[] repeat(int repeatedValue, int count){
+        int[] to = new int[count];
+        for (int i = 0; i < count; i++) {
+            to[i] = repeatedValue;
+        }
+        return to;
+    }
 }
