@@ -277,13 +277,16 @@ public class Func {
 
     public static <T> T first(T[] xs) { return xs == null || xs.length == 0 ? null : xs[0]; }
 
-    public static <T> T first(Iterable<T> xs){
-        if (xs == null) return null;
+    public static <T> T first(Iterable<T> xs) { return first(xs, (T)null); }
+
+    public static <T> T first(Iterable<T> xs, T defaultValue){
+        if (xs == null)
+            return defaultValue;
 
         for (T x : xs) {
             return x;
         }
-        return null;
+        return defaultValue;
     }
 
     public static <T> T last(T[] xs, Predicate<T> predicate){

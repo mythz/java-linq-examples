@@ -50,7 +50,8 @@ public class MainActivity extends Activity {
 //        Run(new Ordering());
 //        Run(new Grouping());
 //        Run(new SetOperators());
-        Run(new Conversion());
+//        Run(new Conversion());
+        Run(new ElementOperators());
     }
 
     void Run(Object linqExamples){
