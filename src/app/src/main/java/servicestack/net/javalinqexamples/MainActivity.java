@@ -47,7 +47,8 @@ public class MainActivity extends Activity {
 //        Run(new Restrictions());
 //        Run(new Projections());
 //        Run(new Partitioning());
-        Run(new Ordering());
+//        Run(new Ordering());
+        Run(new Grouping());
     }
 
     void Run(Object linqExamples){

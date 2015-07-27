@@ -19,10 +19,9 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
-                "orderId=" + orderId +
-                ", orderDate=" + orderDate +
+        return "(Order " +
+                "id=" + orderId +
                 ", total=" + total +
-                '}';
+                ')';
     }
 }

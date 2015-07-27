@@ -5,8 +5,9 @@ import com.android.internal.util.Predicate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mythz on 7/26/2015.
@@ -18,6 +19,10 @@ public class Func {
 
     public static interface Function<T,R> {
         public R apply(T t);
+    }
+
+    public static interface Predicate2<T1,T2> {
+        public boolean apply(T1 a, T2 b);
     }
 
     public static interface FunctionIndex<T,R> {
@@ -559,4 +564,61 @@ public class Func {
         });
         return cloned;
     }
+
+    public static <Key,Item> ArrayList<Group<Key,Item>> groupBy(
+            Iterable<Item> xs,
+            Function<Item, Key> f)
+    {
+        return groupBy(xs, f, null, null);
+    }
+
+    public static <Key,Item> ArrayList<Group<Key,Item>> groupBy(
+            Iterable<Item> xs,
+            Function<Item, Key> f,
+            Predicate2<Key,Key> matchWith            )
+    {
+        return groupBy(xs, f, matchWith, null);
+    }
+
+    public static <Key,Item> ArrayList<Group<Key,Item>> groupBy(
+        Iterable<Item> xs,
+        Function<Item, Key> f,
+        Predicate2<Key,Key> matchWith,
+        Function<Item,Item> valueAs)
+    {
+        ArrayList<Item> to = new ArrayList<>();
+
+        Map<Key, Group<Key,Item>> map = new HashMap<>();
+
+        for (Item x : xs){
+            Item e = x;
+            Key val = f.apply(e);
+            Key key = val;
+
+            if (matchWith != null) {
+                for (Key k : map.keySet()){
+                    if (matchWith.apply(val, k)) {
+                        key = k;
+                        break;
+                    }
+                }
+            }
+
+            if (valueAs != null) {
+                e = valueAs.apply(e);
+            }
+
+            Group<Key,Item> group;
+            if (!map.containsKey(key)){
+                map.put(key, group = new Group<Key, Item>(key));
+            } else {
+                group = map.get(key);
+            }
+
+            group.add(e);
+        }
+
+        return toList(map.values());
+    }
+
 }
