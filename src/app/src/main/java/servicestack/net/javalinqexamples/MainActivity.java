@@ -48,7 +48,8 @@ public class MainActivity extends Activity {
 //        Run(new Projections());
 //        Run(new Partitioning());
 //        Run(new Ordering());
-        Run(new Grouping());
+//        Run(new Grouping());
+        Run(new SetOperators());
     }
 
     void Run(Object linqExamples){

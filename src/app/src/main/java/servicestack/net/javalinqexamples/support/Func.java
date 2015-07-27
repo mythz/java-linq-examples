@@ -3,9 +3,11 @@ package servicestack.net.javalinqexamples.support;
 import com.android.internal.util.Predicate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -135,13 +137,6 @@ public class Func {
             to.add(x);
         }
         return to;
-    }
-
-    //Skip cloning if possible
-    public static <T> ArrayList<T> asList(Iterable<T> xs){
-        return xs != null && ArrayList.class.isInstance(xs)
-            ? (ArrayList<T>)xs
-            : toList(xs);
     }
 
     public static <T,R> ArrayList<R> map(T[] xs, Function<T,R> f) { return map(toList(xs), f); }
@@ -544,11 +539,13 @@ public class Func {
 
     public static <T> List<T> orderByDesc(Iterable<T> xs, Comparator<T> comparer){ return asReversed(orderBy(toList(xs), comparer)); }
 
-
+    @SafeVarargs
     public static <T> ArrayList<T> orderByAll(T[] xs, Comparator<T>... comparers){ return orderByAll(toList(xs), comparers); }
 
+    @SafeVarargs
     public static <T> ArrayList<T> orderByAll(Iterable<T> xs, Comparator<T>... comparers){ return orderByAll(toList(xs), comparers); }
 
+    @SafeVarargs
     private static <T> ArrayList<T> orderByAll(ArrayList<T> cloned, final Comparator<T>... comparers){
         Collections.sort(cloned, new Comparator<T>() {
             @Override
@@ -621,4 +618,81 @@ public class Func {
         return toList(map.values());
     }
 
+    @SafeVarargs
+    public static <T> ArrayList<T> distinct(T... xs){ return distinct(toList(xs)); }
+
+    public static <T> ArrayList<T> distinct(Iterable<T> xs){
+        HashSet<T> to = new HashSet<T>();
+        for (T x : xs){
+            to.add(x);
+        }
+        return toList(to);
+    }
+
+    @SafeVarargs
+    public static <T> ArrayList<T> union(T[]... xss){
+        ArrayList<T> to = new ArrayList<T>();
+        for (T[] xs : xss){
+            for (T x : xs){
+                if (!to.contains(x))
+                    to.add(x);
+            }
+        }
+        return to;
+    }
+
+    @SafeVarargs
+    public static <T> ArrayList<T> union(Iterable<T>... xss){
+        ArrayList<T> to = new ArrayList<T>();
+        for (Iterable<T> xs : xss){
+            for (T x : xs){
+                if (!to.contains(x))
+                    to.add(x);
+            }
+        }
+        return to;
+    }
+
+    @SafeVarargs
+    public static <T> ArrayList<T> intersect(T[]... xss){ return intersect(expand(xss));}
+
+    @SafeVarargs
+    public static <T> ArrayList<T> intersect(Iterable<T>... xss){
+        ArrayList<T> first = null;
+        for (Iterable<T> xs : xss) {
+            if (first == null) {
+                first = union(xs);
+                continue;
+            }
+            retainOnly(first, toList(xs));
+        }
+        return first;
+    }
+
+    public static <T> void retainOnly(List<T> source, List<T> occurrances){
+        for (int i = source.size() - 1; i >= 0; i--) {
+            if (!occurrances.contains(source.get(i))){
+                source.remove(i);
+            }
+        }
+    }
+
+    @SafeVarargs
+    public static <T> ArrayList<T> difference(T[] original, T[]... xss){ return difference(toList(original), expand(xss)); }
+
+    @SafeVarargs
+    public static <T> ArrayList<T> difference(Iterable<T> source, Iterable<T>... xss){ return difference(toList(source), expand(xss)); }
+
+    @SafeVarargs
+    public static <T> ArrayList<T> difference(List<T> source, List<T>... xss){
+        ArrayList<T> to = new ArrayList<T>();
+        for (List<T> xs : xss){
+            for (T x : source){
+                if (!xs.contains(x) && !to.contains(x)){
+                    to.add(x);
+                }
+            }
+        }
+        return to;
+    }
 }
