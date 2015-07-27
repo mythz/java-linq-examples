@@ -46,7 +46,8 @@ public class MainActivity extends Activity {
         Log.i("101 Java LINQ Examples:");
 //        Run(new Restrictions());
 //        Run(new Projections());
-        Run(new Partitioning());
+//        Run(new Partitioning());
+        Run(new Ordering());
     }
 
     void Run(Object linqExamples){

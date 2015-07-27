@@ -20,12 +20,12 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "productId=" + productId +
-                ", productName='" + productName + '\'' +
-                ", category='" + category + '\'' +
-                ", unitPrice=" + unitPrice +
-                ", unitsInStock=" + unitsInStock +
-                '}';
+        return "(Product " +
+                "id=" + productId +
+                ", name=" + productName +
+                ", cat=" + category +
+                ", price=" + unitPrice +
+                ", inStock=" + unitsInStock +
+                ')';
     }
 }

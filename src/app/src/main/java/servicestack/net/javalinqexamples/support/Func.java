@@ -4,6 +4,7 @@ import com.android.internal.util.Predicate;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -105,6 +106,14 @@ public class Func {
         return to;
     }
 
+    public static ArrayList<Double> toList(double... xs){
+        ArrayList<Double> to = new ArrayList<>();
+        for (double x : xs) {
+            to.add(x);
+        }
+        return to;
+    }
+
     public static <T> ArrayList<T> toList(T... xs){
         ArrayList<T> to = new ArrayList<>();
         for (T x : xs) {
@@ -121,6 +130,13 @@ public class Func {
             to.add(x);
         }
         return to;
+    }
+
+    //Skip cloning if possible
+    public static <T> ArrayList<T> asList(Iterable<T> xs){
+        return xs != null && ArrayList.class.isInstance(xs)
+            ? (ArrayList<T>)xs
+            : toList(xs);
     }
 
     public static <T,R> ArrayList<R> map(T[] xs, Function<T,R> f) { return map(toList(xs), f); }
@@ -429,6 +445,13 @@ public class Func {
         return clone;
     }
 
+    //Already cloned
+    private static <T> ArrayList<T> asReversed(ArrayList<T> xs){
+        if (xs == null) return new ArrayList<T>();
+        Collections.reverse(xs);
+        return xs;
+    }
+
     public static <T,E> E reduce(T[] xs, E initialValue, Reducer<T,E> reducer){ return reduce(toList(xs), initialValue, reducer); }
 
     public static <T,E> E reduce(Iterable<T> xs, E initialValue, Reducer<T,E> reducer){
@@ -459,5 +482,81 @@ public class Func {
             sb.append(x);
         }
         return sb.toString();
+    }
+
+    public static <T extends Comparable<? super T>> ArrayList<T> orderBy(T[] xs){ return orderBy(toList(xs)); }
+
+    public static <T extends Comparable<? super T>> ArrayList<T> orderBy(Iterable<T> xs){ return orderBy(toList(xs)); }
+
+    private static <T extends Comparable<? super T>> ArrayList<T> orderBy(ArrayList<T> cloned){
+        Collections.sort(cloned);
+        return cloned;
+    }
+
+    public static <T, R extends Comparable<? super R>> ArrayList<T> orderBy(T[] xs, final Function<T, R> f){ return orderBy(toList(xs), f); }
+
+    public static <T, R extends Comparable<? super R>> ArrayList<T> orderBy(Iterable<T> xs, final Function<T, R> f){ return orderBy(toList(xs), f); }
+
+    private static <T, R extends Comparable<? super R>> ArrayList<T> orderBy(ArrayList<T> cloned, final Function<T,R> f){
+        Collections.sort(cloned, new Comparator<T>() {
+            @Override
+            public int compare(T a, T b) {
+                R aVal = f.apply(a);
+                R bVal = f.apply(b);
+
+                if (aVal == null && bVal == null)
+                    return 0;
+                if (aVal == null)
+                    return -1;
+                if (bVal == null)
+                    return 1;
+
+                return aVal.compareTo(bVal);
+            }
+        });
+
+        return cloned;
+    }
+
+    public static <T> ArrayList<T> orderBy(T[] xs, Comparator<T> comparer){ return orderBy(toList(xs), comparer); }
+
+    public static <T> ArrayList<T> orderBy(Iterable<T> xs, Comparator<T> comparer){ return orderBy(toList(xs), comparer); }
+
+    private static <T> ArrayList<T> orderBy(ArrayList<T> cloned, Comparator<T> comparer){
+        Collections.sort(cloned, comparer);
+        return cloned;
+    }
+
+    public static <T, R extends Comparable<? super R>> ArrayList<T> orderByDesc(T[] xs, final Function<T, R> f){ return asReversed(orderBy(toList(xs), f)); }
+
+    public static <T, R extends Comparable<? super R>> ArrayList<T> orderByDesc(Iterable<T> xs, final Function<T, R> f){ return asReversed(orderBy(toList(xs), f)); }
+
+    public static <T extends Comparable<? super T>> List<T> orderByDesc(T[] xs){ return asReversed(orderBy(toList(xs))); }
+
+    public static <T extends Comparable<? super T>> List<T> orderByDesc(Iterable<T> xs){ return asReversed(orderBy(toList(xs))); }
+
+    public static <T> List<T> orderByDesc(T[] xs, Comparator<T> comparer){ return asReversed(orderBy(toList(xs), comparer)); }
+
+    public static <T> List<T> orderByDesc(Iterable<T> xs, Comparator<T> comparer){ return asReversed(orderBy(toList(xs), comparer)); }
+
+
+    public static <T> ArrayList<T> orderByAll(T[] xs, Comparator<T>... comparers){ return orderByAll(toList(xs), comparers); }
+
+    public static <T> ArrayList<T> orderByAll(Iterable<T> xs, Comparator<T>... comparers){ return orderByAll(toList(xs), comparers); }
+
+    private static <T> ArrayList<T> orderByAll(ArrayList<T> cloned, final Comparator<T>... comparers){
+        Collections.sort(cloned, new Comparator<T>() {
+            @Override
+            public int compare(T a, T b) {
+                for (Comparator<T> c : comparers){
+                    int cmp = c.compare(a,b);
+                    if (cmp != 0){
+                        return cmp;
+                    }
+                }
+                return 0;
+            }
+        });
+        return cloned;
     }
 }
