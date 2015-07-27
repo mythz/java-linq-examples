@@ -2,8 +2,10 @@ package servicestack.net.javalinqexamples.support;
 
 import com.android.internal.util.Predicate;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -121,6 +123,7 @@ public class Func {
         return to;
     }
 
+    @SafeVarargs
     public static <T> ArrayList<T> toList(T... xs){
         ArrayList<T> to = new ArrayList<>();
         for (T x : xs) {
@@ -135,6 +138,61 @@ public class Func {
 
         for (T x : xs) {
             to.add(x);
+        }
+        return to;
+    }
+
+    public static <T> T[] toArray(Iterable<T> xs, Class<T> cls) { return toArray(toList(xs), cls);}
+
+    @SuppressWarnings("unchecked")
+    public static <T> T[] toArray(List<T> list, Class<T> cls) {
+        T[] array = (T[])Array.newInstance(cls, list.size());
+        return list.toArray(array);
+    }
+
+    public static <K,V> HashMap<K,V> toDictionary(K k1, V v1) {
+        HashMap<K,V> to = new HashMap<>();
+        to.put(k1, v1);
+        return to;
+    }
+
+    public static <K,V> HashMap<K,V> toDictionary(K k1, V v1, K k2, V v2) {
+        HashMap<K,V> to = new HashMap<>();
+        to.put(k1, v1);
+        to.put(k2, v2);
+        return to;
+    }
+
+    public static <K,V> HashMap<K,V> toDictionary(K k1, V v1, K k2, V v2, K k3, V v3) {
+        HashMap<K,V> to = new HashMap<>();
+        to.put(k1, v1);
+        to.put(k2, v2);
+        to.put(k3, v3);
+        return to;
+    }
+
+    public static <K,V> HashMap<K,V> toDictionary(Tuple<K,V>... xs) {
+        HashMap<K,V> to = new HashMap<>();
+        for (Tuple<K,V> x : xs){
+            to.put(x.A, x.B);
+        }
+        return to;
+    }
+
+    public static <K, T> HashMap<K,T> toDictionary(Iterable<T> xs, Function<T,K> f) {
+        HashMap<K,T> to = new HashMap<>();
+        for (T x : xs){
+            K key = f.apply(x);
+            to.put(key, x);
+        }
+        return to;
+    }
+
+    public static <T> ArrayList<T> ofType(Iterable xs, Class<T> cls){
+        ArrayList<T> to = new ArrayList<T>();
+        for (Object x : xs){
+            if (cls.isInstance(x))
+                to.add((T)x);
         }
         return to;
     }

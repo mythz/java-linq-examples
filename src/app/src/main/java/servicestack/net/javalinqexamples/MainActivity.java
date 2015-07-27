@@ -49,7 +49,8 @@ public class MainActivity extends Activity {
 //        Run(new Partitioning());
 //        Run(new Ordering());
 //        Run(new Grouping());
-        Run(new SetOperators());
+//        Run(new SetOperators());
+        Run(new Conversion());
     }
 
     void Run(Object linqExamples){
@@ -62,9 +63,8 @@ public class MainActivity extends Activity {
             Log.i("\n" + method.getName().toUpperCase() + ":");
             try {
                 method.invoke(linqExamples);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                Log.e(e.getCause().toString());
                 e.printStackTrace();
             }
         }
