@@ -262,28 +262,49 @@ public class Func {
         return to;
     }
 
-    public static <T> ArrayList<T> skip(T[] xs, Predicate<T> predicate){ return skip(toList(xs), predicate); }
+    public static <T> ArrayList<T> skipWhile(T[] xs, Predicate<T> predicate){ return skipWhile(toList(xs), predicate); }
 
-    public static <T> ArrayList<T> skip(Iterable<T> xs, Predicate<T> predicate){
+    public static <T> ArrayList<T> skipWhile(Iterable<T> xs, Predicate<T> predicate){
         ArrayList<T> to = new ArrayList<>();
         if (xs == null) return to;
 
+        boolean started = false;
         for (T x : xs) {
-            if (predicate.apply(x)){
-                to.add(x);
+            if (!started && predicate.apply(x)){
+                continue;
             }
+
+            started = true;
+            to.add(x);
         }
         return to;
     }
 
-    public static <T> ArrayList<T> take(T[] xs, Predicate<T> predicate){ return take(toList(xs), predicate);}
+    public static <T> ArrayList<T> skipWhilei(Iterable<T> xs, PredicateIndex<T> predicate){
+        ArrayList<T> to = new ArrayList<>();
+        if (xs == null) return to;
 
-    public static <T> ArrayList<T> take(Iterable<T> xs, Predicate<T> predicate){
+        int i = 0;
+        boolean started = false;
+        for (T x : xs) {
+            if (!started && predicate.apply(x, i++)){
+                continue;
+            }
+
+            started = true;
+            to.add(x);
+        }
+        return to;
+    }
+
+    public static <T> ArrayList<T> takeWhile(T[] xs, Predicate<T> predicate){ return takeWhile(toList(xs), predicate);}
+
+    public static <T> ArrayList<T> takeWhile(Iterable<T> xs, Predicate<T> predicate){
         ArrayList<T> to = new ArrayList<>();
         if (xs == null) return to;
 
         for (T x : xs) {
-            if (predicate.apply(x)){
+            if (!predicate.apply(x)){
                 return to;
             }
             to.add(x);
@@ -291,7 +312,22 @@ public class Func {
         return to;
     }
 
-    public static <T> ArrayList<T> take(T[] xs, int take){ return take(toList(xs), take); }
+    public static <T> ArrayList<T> takeWhilei(Iterable<T> xs, PredicateIndex<T> predicate){
+        ArrayList<T> to = new ArrayList<>();
+        if (xs == null) return to;
+
+        int i = 0;
+        for (T x : xs) {
+            if (!predicate.apply(x, i++)){
+                return to;
+            }
+            to.add(x);
+        }
+        return to;
+    }
+
+    public static <T> ArrayList<T> take(T[] xs, int take) {
+        return take(toList(xs), take); }
 
     public static <T> ArrayList<T> take(Iterable<T> xs, int take){
         int i = 0;
