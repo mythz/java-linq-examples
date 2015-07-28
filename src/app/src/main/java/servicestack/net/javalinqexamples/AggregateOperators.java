@@ -399,6 +399,4 @@ public class AggregateOperators {
 
         Log.d("Ending balance: " + endBalance);
     }
-
-
 }

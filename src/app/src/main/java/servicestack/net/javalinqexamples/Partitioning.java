@@ -66,6 +66,7 @@ public class Partitioning {
                 ),
             3);
 
+        Log.d("First 3 orders in WA:");
         for (Tuple3<?, ?, ?> o : first3WAOrders) {
             Log.d(o);
         }
@@ -108,6 +109,7 @@ public class Partitioning {
                     ),
                 2);
 
+        Log.d("All but first 2 orders in WA:");
         for (Tuple3<?, ?, ?> o : allButFirst2Orders) {
             Log.d(o);
         }

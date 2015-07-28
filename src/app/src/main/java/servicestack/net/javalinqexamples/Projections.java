@@ -323,7 +323,7 @@ public class Projections {
                   return map(cust.orders, new Function<Order, String>() {
                       @Override
                       public String apply(Order o) {
-                          return "Customer #" + (custIndex + 1) + " has an oder with OrderID " + o.orderId;
+                          return "Customer #" + (custIndex + 1) + " has an order with OrderID " + o.orderId;
                       }
                   });
               }
