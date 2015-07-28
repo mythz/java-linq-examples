@@ -91,7 +91,7 @@ public class MainActivity extends Activity {
         scrollView.post(new Runnable() {
             @Override
             public void run() {
-//                scrollView.fullScroll(View.FOCUS_DOWN);
+                scrollView.fullScroll(View.FOCUS_DOWN);
             }
         });
     }

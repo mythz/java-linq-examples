@@ -11,13 +11,13 @@ Compare Java to other LINQ examples written in:
 
 ### Running the examples
 
-The results of each of the LINQ examples are logged in an Android device:
+Each of the LINQ Examples can be run from the included Android App with its results logged to the screen:
 
 ![](https://raw.githubusercontent.com/ServiceStack/Assets/master/img/wikis/java/linq-examples-screenshot.png)
 
-You can choose to run specific examples by commenting the sections you're not interested in [MainActivity.java](https://github.com/mythz/java-linq-examples/blob/432dfeb0ea3c95ecdd8e007886a77d1508d6f312/src/app/src/main/java/servicestack/net/javalinqexamples/MainActivity.java#L54-L67).
+Run the included [Android Studio project](https://github.com/mythz/java-linq-examples/tree/master/src) to execute all the examples. You can also choose to only run specific examples by commenting out any of the sections you're not interested in [MainActivity.java](https://github.com/mythz/java-linq-examples/blob/432dfeb0ea3c95ecdd8e007886a77d1508d6f312/src/app/src/main/java/servicestack/net/javalinqexamples/MainActivity.java#L54-L67).
 
-To see the full output of all the examples, run the [Android Studio project](https://github.com/mythz/java-linq-examples/tree/master/src) locally. A copy of the example output is also available in [linq-log.txt](https://raw.githubusercontent.com/mythz/java-linq-examples/master/linq-log.txt).
+A copy of the LINQ examples output is also available in [linq-log.txt](https://raw.githubusercontent.com/mythz/java-linq-examples/master/linq-log.txt).
 
 
 ### Contents
@@ -39,21 +39,33 @@ The samples below mirrors the C# LINQ samples layout with the names of the top-l
 #### [LINQ - Query Execution](https://github.com/mythz/java-linq-examples/blob/master/src/app/src/main/java/servicestack/net/QueryExecution.java) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Query-Execution-ce0d3b95)
 #### [LINQ - Join Operators](https://github.com/mythz/java-linq-examples/blob/master/src/app/src/main/java/servicestack/net/JoinOperators.java) / [MSDN C#](http://code.msdn.microsoft.com/LINQ-Join-Operators-dabef4e9)
 
-## Functional Utils in Java
+## Java Functional Utils
 
-Unlike many languages that support a functional-style, Java doesn't have many LINQ-like utils built-in by default, Java's also not very extensible and the lack of proper Type Inference, Type Erasure and Closures in Java 1.7 makes the equivalent Java source code particularly more verbose.
+Unlike many modern languages supporting a functional-style, Java doesn't have any LINQ-like utils built-in by default. It's also not very extensible which combined with the lack of proper Type Inference, Type Erasure and Closures in Java 1.7 makes the equivalent Java source code particularly more verbose.
 
-To make development in Java more enjoyable we've added common functional utils to simplify Functional programming in Java inside [ServiceStack's Java and Android Client Library](https://github.com/ServiceStack/ServiceStack/wiki/Java-Add-ServiceStack-Reference). This can be added to your Android Studio or **build.gradle** dependency with:
+To improve the development experience in Java, we've added common functional utils to simplify programming in a functional style inside [ServiceStack's Java and Android Client Library](https://github.com/ServiceStack/ServiceStack/wiki/Java-Add-ServiceStack-Reference): **net.servicestack:android**. 
+
+### Install
+
+To include it in your Android Studio project, add it to your **build.gradle** dependency, e.g:
 
     dependencies {
         compile fileTree(dir: 'libs', include: ['*.jar'])
         compile 'net.servicestack:android:1.0.13'
     }
 
-This library also gets automatically added when Adding a Remote Service Reference with [Intellij IDEA](https://github.com/ServiceStack/ServiceStack/wiki/Java-Add-ServiceStack-Reference#servicestack-idea-android-studio-plugin
-) as well as [Maven projects in Eclipse](https://github.com/ServiceStack/ServiceStack.Java/tree/master/src/ServiceStackEclipse#eclipse-integration-with-servicestack).
+Pure Java projects should add the **net.servicestack:client** dependency instead:
 
-Once the dependency is added you can add a static import and access all the functional utils used in the LINQ examples below with:
+    dependencies {
+        compile 'net.servicestack:client:1.0.13'
+    }
+
+Alternatively this library is also automatically added when Adding a Typed Remote Service Reference with ServiceStack IDE Plugins for [Intellij IDEA](https://github.com/ServiceStack/ServiceStack/wiki/Java-Add-ServiceStack-Reference#servicestack-idea-android-studio-plugin
+) and [Eclipse Maven projects](https://github.com/ServiceStack/ServiceStack.Java/tree/master/src/ServiceStackEclipse#eclipse-integration-with-servicestack).
+
+### Usage
+
+Once the dependency is added you can add a static import to access all the functional utils used in the LINQ examples below:
 
 ```java
 import static net.servicestack.func.Func.*;
@@ -67,7 +79,7 @@ For a side-by-side comparison, the original **C#** source code is displayed abov
   - Outputs ending with `...` illustrates only a partial response is displayed. 
   - The C# ObjectDumper util used is downloadable from MSDN - [ObjectDumper.zip](http://code.msdn.microsoft.com/Visual-Studio-2008-C-d295cdba/file/46086/1/ObjectDumper.zip)
 
-The Java LINQ Examples are limited to Java 1.7 so they're usable with Java 1.7 on Android. 
+The Java LINQ Examples are limited to Java 1.7 so they're available on Android. 
 
 
 LINQ - Restriction Operators
