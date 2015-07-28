@@ -56,7 +56,8 @@ public class MainActivity extends Activity {
 //        Run(new Quantifiers());
 //        Run(new AggregateOperators());
 //        Run(new MiscOperators());
-        Run(new QueryExecution());
+//        Run(new QueryExecution());
+        Run(new JoinOperators());
     }
 
     void Run(Object linqExamples){

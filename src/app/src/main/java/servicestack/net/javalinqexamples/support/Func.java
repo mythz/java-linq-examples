@@ -1051,4 +1051,51 @@ public class Func {
         return sumDouble(xs, f) / (double) xs.size();
     }
 
+    public static <T,U> List<Tuple<T,U>> join(Iterable<T> xs, final Iterable<U> with, final Predicate2<T,U> match){
+        return expand(
+            map(xs, new Function<T, List<Tuple<T, U>>>() {
+                    @Override
+                    public List<Tuple<T, U>> apply(final T t) {
+                        return map
+                        (
+                            filter(with, new Predicate<U>() {
+                                @Override
+                                public boolean apply(U u) {
+                                    return match.apply(t, u);
+                                }
+                            }),
+                            new Function<U, Tuple<T, U>>() {
+                                @Override
+                                public Tuple<T, U> apply(U u) {
+                                    return new Tuple<>(t,u);
+                                }
+                            }
+                        );
+                    }
+                }
+            )
+        );
+    }
+
+    public static <T,U> List<Group<T,Tuple<T,U>>> joinGroup(Iterable<T> xs, final Iterable<U> with, final Predicate2<T,U> match){
+        return groupBy(
+            join(xs, with, match),
+            new Function<Tuple<T, U>, T>() {
+                @Override
+                public T apply(Tuple<T, U> x) {
+                    return x.A;
+                }
+            }
+        );
+    }
+
+/*
+*
+func joinGroup<T : Hashable,U>(seq:[T], withSeq:[U], match:(T,U)->Bool) -> [Group<T,(T,U)>] {
+    return join(seq, withSeq, match).groupBy { x -> T in
+        let (t,u) = x
+        return t
+    }
+}
+* */
 }
