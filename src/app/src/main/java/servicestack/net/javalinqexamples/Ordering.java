@@ -1,23 +1,26 @@
 package servicestack.net.javalinqexamples;
 
-import com.android.internal.util.Predicate;
-
-import java.io.Console;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-
-import servicestack.net.javalinqexamples.support.Customer;
-import servicestack.net.javalinqexamples.support.Func;
-import servicestack.net.javalinqexamples.support.Log;
-import servicestack.net.javalinqexamples.support.Order;
-import servicestack.net.javalinqexamples.support.Product;
-
+import static net.servicestack.func.Func.*;
 import static servicestack.net.javalinqexamples.support.Data.getCustomerList;
 import static servicestack.net.javalinqexamples.support.Data.getProductList;
-import static servicestack.net.javalinqexamples.support.Func.*;
+
+import net.servicestack.client.Log;
+import net.servicestack.func.Function;
+import net.servicestack.func.Group;
+import net.servicestack.func.Predicate;
+import net.servicestack.func.Predicate2;
+import net.servicestack.func.Reducer;
+import net.servicestack.func.Tuple;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+
+import servicestack.net.javalinqexamples.support.Customer;
+import servicestack.net.javalinqexamples.support.Order;
+import servicestack.net.javalinqexamples.support.Product;
 
 /**
  * Created by mythz on 7/26/2015.

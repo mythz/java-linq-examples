@@ -9,13 +9,14 @@ import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import net.servicestack.client.Log;
+import net.servicestack.client.LogProvider;
+import net.servicestack.client.LogType;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import servicestack.net.javalinqexamples.support.Data;
-import servicestack.net.javalinqexamples.support.Log;
-import servicestack.net.javalinqexamples.support.LogProvider;
-import servicestack.net.javalinqexamples.support.LogType;
 
 
 public class MainActivity extends Activity {

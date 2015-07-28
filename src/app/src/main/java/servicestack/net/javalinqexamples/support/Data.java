@@ -21,7 +21,7 @@ import java.util.List;
 
 import servicestack.net.javalinqexamples.R;
 
-import static servicestack.net.javalinqexamples.support.Func.toList;
+import static net.servicestack.func.Func.toList;
 
 /**
  * Created by mythz on 7/26/2015.
