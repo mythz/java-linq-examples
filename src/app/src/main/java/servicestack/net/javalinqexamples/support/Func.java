@@ -19,6 +19,10 @@ public class Func {
         public void apply(T t);
     }
 
+    public static interface FunctionResult<T> {
+        public T apply();
+    }
+
     public static interface Function<T,R> {
         public R apply(T t);
     }
