@@ -1,5 +1,6 @@
 package servicestack.net.javalinqexamples;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -39,24 +40,30 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActionBar bar = getActionBar();
+        bar.setDisplayShowHomeEnabled(true);
+        bar.setLogo(R.drawable.ic_action_android);
+        bar.setDisplayUseLogoEnabled(true);
+
         sb = new StringBuilder();
         Log.Instance = new StringBuilderLogProvider(sb);
         Data.init(getResources());
 
-        Log.i("101 Java LINQ Examples:");
-//        Run(new Restrictions());
-//        Run(new Projections());
-//        Run(new Partitioning());
-//        Run(new Ordering());
-//        Run(new Grouping());
-//        Run(new SetOperators());
-//        Run(new Conversion());
-//        Run(new ElementOperators());
-//        Run(new GenerationOperators());
-//        Run(new Quantifiers());
-//        Run(new AggregateOperators());
-//        Run(new MiscOperators());
-//        Run(new QueryExecution());
+        Log.i("101 Java LINQ Examples");
+        Log.i("======================\n");
+        Run(new Restrictions());
+        Run(new Projections());
+        Run(new Partitioning());
+        Run(new Ordering());
+        Run(new Grouping());
+        Run(new SetOperators());
+        Run(new Conversion());
+        Run(new ElementOperators());
+        Run(new GenerationOperators());
+        Run(new Quantifiers());
+        Run(new AggregateOperators());
+        Run(new MiscOperators());
+        Run(new QueryExecution());
         Run(new JoinOperators());
     }
 
@@ -67,7 +74,7 @@ public class MainActivity extends Activity {
             if (method.getDeclaringClass() != cls || method.getParameterTypes().length != 0)
                 continue;
 
-            Log.i("\n" + method.getName().toUpperCase() + ":");
+            Log.i("\n# " + method.getName().toUpperCase());
             try {
                 method.invoke(linqExamples);
             } catch (IllegalAccessException | InvocationTargetException e) {
@@ -83,7 +90,7 @@ public class MainActivity extends Activity {
         scrollView.post(new Runnable() {
             @Override
             public void run() {
-                scrollView.fullScroll(View.FOCUS_DOWN);
+//                scrollView.fullScroll(View.FOCUS_DOWN);
             }
         });
     }

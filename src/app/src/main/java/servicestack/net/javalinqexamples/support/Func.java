@@ -1088,14 +1088,4 @@ public class Func {
             }
         );
     }
-
-/*
-*
-func joinGroup<T : Hashable,U>(seq:[T], withSeq:[U], match:(T,U)->Bool) -> [Group<T,(T,U)>] {
-    return join(seq, withSeq, match).groupBy { x -> T in
-        let (t,u) = x
-        return t
-    }
-}
-* */
 }
