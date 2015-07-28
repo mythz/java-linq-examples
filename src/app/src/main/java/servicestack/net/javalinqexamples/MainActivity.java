@@ -54,7 +54,8 @@ public class MainActivity extends Activity {
 //        Run(new ElementOperators());
 //        Run(new GenerationOperators());
 //        Run(new Quantifiers());
-        Run(new AggregateOperators());
+//        Run(new AggregateOperators());
+        Run(new MiscOperators());
     }
 
     void Run(Object linqExamples){

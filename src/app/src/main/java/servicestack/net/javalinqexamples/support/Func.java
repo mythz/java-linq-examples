@@ -700,6 +700,28 @@ public class Func {
     }
 
     @SafeVarargs
+    public static <T> ArrayList<T> concat(T[]... xss){
+        ArrayList<T> to = new ArrayList<T>();
+        for (T[] xs : xss){
+            for (T x : xs){
+                to.add(x);
+            }
+        }
+        return to;
+    }
+
+    @SafeVarargs
+    public static <T> ArrayList<T> concat(Iterable<T>... xss){
+        ArrayList<T> to = new ArrayList<T>();
+        for (Iterable<T> xs : xss){
+            for (T x : xs){
+                to.add(x);
+            }
+        }
+        return to;
+    }
+
+    @SafeVarargs
     public static <T> ArrayList<T> intersect(T[]... xss){ return intersect(expand(xss));}
 
     @SafeVarargs
