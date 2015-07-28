@@ -32,7 +32,7 @@ public class Grouping {
             new Function<Group<Integer, Integer>, Tuple<Integer, Group<Integer,Integer>>>() {
                 @Override
                 public Tuple<Integer, Group<Integer,Integer>> apply(Group<Integer, Integer> g){
-                    return new Tuple<>(g.Key, g);
+                    return new Tuple<>(g.key, g);
                 }
             });
 
@@ -57,7 +57,7 @@ public class Grouping {
             new Function<Group<Character, String>, Tuple<Character, Group<Character,String>>>() {
                 @Override
                 public Tuple<Character, Group<Character,String>> apply(Group<Character,String> g){
-                    return new Tuple<>(g.Key, g);
+                    return new Tuple<>(g.key, g);
                 }
             });
 
@@ -82,7 +82,7 @@ public class Grouping {
             new Function<Group<String,Product>, Tuple<String, Group<String,Product>>>() {
                 @Override
                 public Tuple<String, Group<String,Product>> apply(Group<String,Product> g){
-                    return new Tuple<>(g.Key, g);
+                    return new Tuple<>(g.key, g);
                 }
             });
 
@@ -110,8 +110,8 @@ public class Grouping {
                                 @Override
                                 public Tuple<Integer, ArrayList<Group<Integer, Order>>> apply(Group<Integer, Order> yg) {
                                     return new Tuple<>( //Yay Type Inference!
-                                        yg.Key,
-                                        groupBy(yg.Items, new Function<Order, Integer>() {
+                                        yg.key,
+                                        groupBy(yg.items, new Function<Order, Integer>() {
                                             @Override
                                             public Integer apply(Order o) {
                                                 return o.orderDate.getMonth() + 1;
@@ -130,7 +130,7 @@ public class Grouping {
             for (Tuple<Integer, ArrayList<Group<Integer, Order>>> yg : g.B){
                 Log.d(yg.A + ": ");
                 for (Group<Integer, Order> mg : yg.B){
-                    Log.d("  " + mg.Key + ": ");
+                    Log.d("  " + mg.key + ": ");
                     for (Order o : mg){
                         Log.d("    " + o);
                     }

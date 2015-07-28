@@ -7,22 +7,22 @@ import java.util.Iterator;
  * Created by mythz on 7/27/2015.
  */
 public class Group<Key,Element> implements Iterable<Element> {
-    public Key Key;
-    public ArrayList<Element> Items;
+    public Key key;
+    public ArrayList<Element> items;
 
     public Group(Key key) {
         this(key, null);
     }
 
     public Group(Key key, ArrayList<Element> items) {
-        Key = key;
-        Items = items;
-        if (Items == null)
-            Items = new ArrayList<Element>();
+        this.key = key;
+        this.items = items;
+        if (this.items == null)
+            this.items = new ArrayList<Element>();
     }
 
     public void add(Element e){
-        Items.add(e);
+        items.add(e);
     }
 
     @Override
@@ -32,29 +32,29 @@ public class Group<Key,Element> implements Iterable<Element> {
 
         Group<?, ?> group = (Group<?, ?>) o;
 
-        if (Key != null ? !Key.equals(group.Key) : group.Key != null) return false;
-        return !(Items != null ? !Items.equals(group.Items) : group.Items != null);
+        if (key != null ? !key.equals(group.key) : group.key != null) return false;
+        return !(items != null ? !items.equals(group.items) : group.items != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = Key != null ? Key.hashCode() : 0;
-        result = 31 * result + (Items != null ? Items.hashCode() : 0);
+        int result = key != null ? key.hashCode() : 0;
+        result = 31 * result + (items != null ? items.hashCode() : 0);
         return result;
     }
 
     @Override
     public Iterator<Element> iterator() {
-        return Items.iterator();
+        return items.iterator();
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(Key).append(":\n");
-        for (Element e : Items){
+        sb.append(key).append(":\n");
+        for (Element e : items){
             sb.append(e).append("\n");
         }
 

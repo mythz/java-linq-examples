@@ -52,7 +52,9 @@ public class MainActivity extends Activity {
 //        Run(new SetOperators());
 //        Run(new Conversion());
 //        Run(new ElementOperators());
-        Run(new GenerationOperators());
+//        Run(new GenerationOperators());
+//        Run(new Quantifiers());
+        Run(new AggregateOperators());
     }
 
     void Run(Object linqExamples){

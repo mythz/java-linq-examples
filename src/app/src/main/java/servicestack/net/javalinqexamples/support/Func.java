@@ -4,8 +4,6 @@ import com.android.internal.util.Predicate;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -277,7 +275,7 @@ public class Func {
 
     public static <T> T first(T[] xs) { return xs == null || xs.length == 0 ? null : xs[0]; }
 
-    public static <T> T first(Iterable<T> xs) { return first(xs, (T)null); }
+    public static <T> T first(Iterable<T> xs) { return first(xs, (T) null); }
 
     public static <T> T first(Iterable<T> xs, T defaultValue){
         if (xs == null)
@@ -444,18 +442,6 @@ public class Func {
             }
         }
         return true;
-    }
-
-    public static <T> ArrayList<T> expand(T[]... xss){
-        ArrayList<T> to = new ArrayList<>();
-        if (xss == null) return to;
-
-        for (T[] xs : xss) {
-            for (T x : xs){
-                to.add(x);
-            }
-        }
-        return to;
     }
 
     public static <T> ArrayList<T> expand(Iterable<T>... xss){
@@ -679,8 +665,7 @@ public class Func {
         return toList(map.values());
     }
 
-    @SafeVarargs
-    public static <T> ArrayList<T> distinct(T... xs){ return distinct(toList(xs)); }
+    public static <T> ArrayList<T> distinct(T[] xs){ return distinct(toList(xs)); }
 
     public static <T> ArrayList<T> distinct(Iterable<T> xs){
         HashSet<T> to = new HashSet<T>();
@@ -780,4 +765,264 @@ public class Func {
         }
         return to;
     }
+
+
+    public static <T> int count(T[] xs, Predicate<T> predicate){ return count(toList(xs), predicate); }
+
+    public static <T> int count(Iterable<T> xs, Predicate<T> predicate){
+        if (xs == null) return 0;
+
+        int count = 0;
+        for (T x : xs) {
+            if (predicate.apply(x)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static int sum(int[] xs){ return sum(toList(xs), (Predicate<Integer>) null); }
+
+    public static int sum(int[] xs, Predicate<Integer> predicate){ return sum(toList(xs), predicate); }
+
+    public static Integer sum(Iterable<Integer> xs){ return sum(xs, (Predicate<Integer>)null); }
+
+    public static Integer sum(Iterable<Integer> xs, Predicate<Integer> predicate){
+        if (xs == null) return 0;
+
+        int sum = 0;
+        for (Integer x : xs) {
+            if (predicate == null || predicate.apply(x)){
+                sum += x;
+            }
+        }
+        return sum;
+    }
+
+    public static <T> Integer sum(T[] xs, Function<T,Integer> f){ return sum(toList(xs), f); }
+
+    public static <T> Integer sum(Iterable<T> xs, Function<T,Integer> f){
+        if (xs == null) return 0;
+
+        int sum = 0;
+        for (T x : xs) {
+            sum += f.apply(x);
+        }
+        return sum;
+    }
+
+    public static double sumDouble(double[] xs){ return sumDouble(toList(xs), (Predicate<Double>) null); }
+
+    public static double sumDouble(double[] xs, Predicate<Double> predicate){ return sumDouble(toList(xs), predicate); }
+
+    public static Double sumDouble(Iterable<Double> xs){ return sumDouble(xs, (Predicate<Double>) null); }
+
+    public static Double sumDouble(Iterable<Double> xs, Predicate<Double> predicate){
+        if (xs == null) return 0d;
+
+        double sum = 0;
+        for (Double x : xs) {
+            if (predicate == null || predicate.apply(x)){
+                sum += x;
+            }
+        }
+        return sum;
+    }
+
+    public static <T> Double sumDouble(T[] xs, Function<T, Double> f){ return sumDouble(toList(xs), f); }
+
+    public static <T> Double sumDouble(Iterable<T> xs, Function<T, Double> f){
+        if (xs == null) return 0d;
+
+        double sum = 0;
+        for (T x : xs) {
+            sum += f.apply(x);
+        }
+        return sum;
+    }
+
+    public static <T> ArrayList<T> expand(T[]... xss){
+        ArrayList<T> to = new ArrayList<>();
+        if (xss == null) return to;
+
+        for (T[] xs : xss) {
+            for (T x : xs){
+                to.add(x);
+            }
+        }
+        return to;
+    }
+
+    public static int min(int[] xs){ return min(toList(xs), (Predicate<Integer>) null); }
+
+    public static int min(int[] xs, Predicate<Integer> predicate){ return min(toList(xs), predicate); }
+
+    public static Integer min(Iterable<Integer> xs){ return min(xs, (Predicate<Integer>) null); }
+
+    public static Integer min(Iterable<Integer> xs, Predicate<Integer> predicate){
+        if (xs == null) return null;
+
+        Integer min = null;
+        for (Integer x : xs) {
+            if (predicate == null || predicate.apply(x)){
+                if (min == null || x < min)
+                    min = x;
+            }
+        }
+        return min;
+    }
+
+    public static <T> Integer min(T[] xs, Function<T,Integer> f){ return min(toList(xs), f); }
+
+    public static <T> Integer min(Iterable<T> xs, Function<T,Integer> f){
+        if (xs == null) return null;
+
+        Integer min = null;
+        for (T t : xs) {
+            Integer x = f.apply(t);
+            if (min == null || x < min)
+                min = x;
+        }
+        return min;
+    }
+
+    public static double minDouble(double[] xs){ return minDouble(toList(xs), (Predicate<Double>) null); }
+
+    public static double minDouble(double[] xs, Predicate<Double> predicate){ return minDouble(toList(xs), predicate); }
+
+    public static Double minDouble(Iterable<Double> xs){ return minDouble(xs, (Predicate<Double>) null); }
+
+    public static Double minDouble(Iterable<Double> xs, Predicate<Double> predicate){
+        if (xs == null) return null;
+
+        Double min = null;
+        for (Double x : xs) {
+            if (predicate == null || predicate.apply(x)){
+                if (min == null || x < min)
+                    min = x;
+            }
+        }
+        return min;
+    }
+
+    public static <T> Double minDouble(T[] xs, Function<T, Double> f){ return minDouble(toList(xs), f); }
+
+    public static <T> Double minDouble(Iterable<T> xs, Function<T, Double> f){
+        if (xs == null) return null;
+
+        Double min = null;
+        for (T t : xs) {
+            Double x = f.apply(t);
+            if (min == null || x < min)
+                min = x;
+        }
+        return min;
+    }
+
+    public static int max(int[] xs){ return max(toList(xs), (Predicate<Integer>) null); }
+
+    public static int max(int[] xs, Predicate<Integer> predicate){ return max(toList(xs), predicate); }
+
+    public static Integer max(Iterable<Integer> xs){ return max(xs, (Predicate<Integer>) null); }
+
+    public static Integer max(Iterable<Integer> xs, Predicate<Integer> predicate){
+        if (xs == null) return null;
+
+        Integer max = null;
+        for (Integer x : xs) {
+            if (predicate == null || predicate.apply(x)){
+                if (max == null || x > max)
+                    max = x;
+            }
+        }
+        return max;
+    }
+
+    public static <T> Integer max(T[] xs, Function<T,Integer> f){ return max(toList(xs), f); }
+
+    public static <T> Integer max(Iterable<T> xs, Function<T,Integer> f){
+        if (xs == null) return null;
+
+        Integer max = null;
+        for (T t : xs) {
+            Integer x = f.apply(t);
+            if (max == null || x > max)
+                max = x;
+        }
+        return max;
+    }
+
+    public static double maxDouble(double[] xs){ return maxDouble(toList(xs), (Predicate<Double>) null); }
+
+    public static double maxDouble(double[] xs, Predicate<Double> predicate){ return maxDouble(toList(xs), predicate); }
+
+    public static Double maxDouble(Iterable<Double> xs){ return maxDouble(xs, (Predicate<Double>) null); }
+
+    public static Double maxDouble(Iterable<Double> xs, Predicate<Double> predicate){
+        if (xs == null) return null;
+
+        Double max = null;
+        for (Double x : xs) {
+            if (predicate == null || predicate.apply(x)){
+                if (max == null || x > max)
+                    max = x;
+            }
+        }
+        return max;
+    }
+
+    public static <T> Double maxDouble(T[] xs, Function<T, Double> f){ return maxDouble(toList(xs), f); }
+
+    public static <T> Double maxDouble(Iterable<T> xs, Function<T, Double> f){
+        if (xs == null) return null;
+
+        Double max = null;
+        for (T t : xs) {
+            Double x = f.apply(t);
+            if (max == null || x > max)
+                max = x;
+        }
+        return max;
+    }
+
+    public static double avg(int[] xs){ return avg(toList(xs), (Predicate<Integer>) null); }
+
+    public static double avg(int[] xs, Predicate<Integer> predicate){ return avg(toList(xs), predicate); }
+
+    public static Double avg(Iterable<Integer> xs){ return avg(xs, (Predicate<Integer>) null); }
+
+    public static Double avg(Iterable<Integer> xs, Predicate<Integer> predicate){ return avg(toList(xs), predicate); }
+
+    public static Double avg(List<Integer> xs, Predicate<Integer> predicate){
+        return sum(xs, predicate) / (double) xs.size();
+    }
+
+    public static <T> Double avg(T[] xs, Function<T,Integer> f){ return avg(toList(xs), f); }
+
+    public static <T> Double avg(Iterable<T> xs, Function<T,Integer> f){ return avg(toList(xs), f); }
+
+    public static <T> Double avg(List<T> xs, Function<T,Integer> f){
+        return sum(xs, f) / (double) xs.size();
+    }
+
+    public static double avgDouble(double[] xs){ return avgDouble(toList(xs), (Predicate<Double>) null); }
+
+    public static double avgDouble(double[] xs, Predicate<Double> predicate){ return avgDouble(toList(xs), predicate); }
+
+    public static Double avgDouble(Iterable<Double> xs){ return avgDouble(xs, (Predicate<Double>) null); }
+
+    public static Double avgDouble(Iterable<Double> xs, Predicate<Double> predicate){ return avgDouble(toList(xs), predicate); }
+
+    public static Double avgDouble(List<Double> xs, Predicate<Double> predicate){
+        return sumDouble(xs, predicate) / (double) xs.size();
+    }
+
+    public static <T> Double avgDouble(T[] xs, Function<T, Double> f){ return avgDouble(toList(xs), f); }
+
+    public static <T> Double avgDouble(Iterable<T> xs, Function<T, Double> f){ return avgDouble(toList(xs), f); }
+
+    public static <T> Double avgDouble(List<T> xs, Function<T, Double> f){
+        return sumDouble(xs, f) / (double) xs.size();
+    }
+
 }
