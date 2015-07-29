@@ -65,7 +65,7 @@ Alternatively this library is also automatically added when Adding a Typed Remot
 
 ### Usage
 
-Once the dependency is added you can add a static import to access all the functional utils used in the LINQ examples below:
+Once the dependency is added you can add a static import to access [all the functional utils](https://github.com/ServiceStack/ServiceStack.Java/blob/master/src/AndroidClient/client/src/main/java/net/servicestack/func/Func.java) used in the LINQ examples below:
 
 ```java
 import static net.servicestack.func.Func.*;
