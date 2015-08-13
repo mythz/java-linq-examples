@@ -9,6 +9,10 @@ Compare Java to other LINQ examples written in:
  - [Clojure](https://github.com/mythz/clojure-linq-examples)
  - [Dart](https://github.com/mythz/dart-linq-examples)
 
+## [Call .NET Web Services from Java](https://github.com/ServiceStack/ServiceStack/wiki/Java-Add-ServiceStack-Reference)
+
+If you're looking for an effortles typed API for consuming .NET Web Services in pure Java or Android Java Apps checkout ServiceStack's [Java Add ServiceStack Reference](https://github.com/ServiceStack/ServiceStack/wiki/Java-Add-ServiceStack-Reference).
+
 ### Running the examples
 
 Each of the LINQ Examples can be run from the included Android App with its results logged to the screen:
