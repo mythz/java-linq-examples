@@ -8,6 +8,7 @@ Compare Java to other LINQ examples written in:
  - [Swift](https://github.com/mythz/swift-linq-examples)
  - [Clojure](https://github.com/mythz/clojure-linq-examples)
  - [Dart](https://github.com/mythz/dart-linq-examples)
+ - [Elixir](https://github.com/omnibs/elixir-linq-examples)
 
 ## [Call .NET Web Services from Java](https://github.com/ServiceStack/ServiceStack/wiki/Java-Add-ServiceStack-Reference)
 
