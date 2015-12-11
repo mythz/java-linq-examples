@@ -39,7 +39,7 @@ public class ElementOperators {
     public void linq59(){
         String[] strings = new String[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
-        String startsWithO = first(strings, new Predicate<String>() {
+        String startsWithO = first(toList(strings), new Predicate<String>() {
             @Override
             public boolean apply(String s) {
                 return s.charAt(0) == 'o';
