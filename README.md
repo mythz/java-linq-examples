@@ -4796,7 +4796,8 @@ public void linq103(){
             Log.d("   " + p.productName);
         }
     }
-}```
+}
+```
 #### Output
 
     Beverages:
