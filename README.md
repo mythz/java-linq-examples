@@ -11,7 +11,7 @@ Compare Java to other LINQ examples written in:
  - [Dart](https://github.com/mythz/dart-linq-examples)
  - [Elixir](https://github.com/omnibs/elixir-linq-examples)
 
-## [Call .NET Web Services from Java](https://github.com/ServiceStack/ServiceStack/wiki/Java-Add-ServiceStack-Reference)
+## [Call .NET Web Services from Java](http://docs.servicestack.net/java-add-servicestack-reference)
 
 If you're looking for an effortles typed API for consuming .NET Web Services in pure Java or Android Java Apps checkout ServiceStack's [Java Add ServiceStack Reference](https://github.com/ServiceStack/ServiceStack/wiki/Java-Add-ServiceStack-Reference).
 
