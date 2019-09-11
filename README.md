@@ -6,6 +6,7 @@ Port of the [C# 101 LINQ Samples](http://code.msdn.microsoft.com/101-LINQ-Sample
 Compare Java to other LINQ examples written in:
 
  - [Kotlin](https://github.com/mythz/kotlin-linq-examples)
+ - [Groovy](https://gitlab.com/svermeulen/groovy-linq-samples)
  - [Swift](https://github.com/mythz/swift-linq-examples)
  - [Clojure](https://github.com/mythz/clojure-linq-examples)
  - [Dart](https://github.com/mythz/dart-linq-examples)
