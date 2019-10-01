@@ -12,7 +12,8 @@ Compare Java to other LINQ examples written in:
  - [Dart](https://github.com/mythz/dart-linq-examples)
  - [Elixir](https://github.com/omnibs/elixir-linq-examples)
  - [Python](https://github.com/rogerwcpt/python-linq-samples)
- - [#Script](https://sharpscript.net/linq/restriction-operators)
+ - [#Script code](https://sharpscript.net/linq/restriction-operators?lang=code)
+ - [#Script lisp](https://sharpscript.net/linq/restriction-operators?lang=lisp)
 
 ## [Call .NET Web Services from Java](http://docs.servicestack.net/java-add-servicestack-reference)
 
